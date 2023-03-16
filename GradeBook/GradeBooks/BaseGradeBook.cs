@@ -208,34 +208,26 @@ namespace GradeBook.GradeBooks
 
         public virtual char GetLetterGrade(double averageGrade)
         {
-            if (averageGrade >= 90)
-                return 'A';
-            else if (averageGrade >= 80)
-                return 'B';
-            else if (averageGrade >= 70)
-                return 'C';
-            else if (averageGrade >= 60)
-                return 'D';
+            if (Students.Count <= 5) throw (new System.InvalidOperationException());
             else
-                return 'F';
-        }
-        public virtual char RankedGradeBook(double averageGrade)
-        {
-            
-                if (averageGrade >= 90)
+            {
+                if (averageGrade >= Students.Count() / 5)
                     return 'A';
-                else if (averageGrade >= 80)
+                else if (averageGrade >= (Students.Count() / 5) * 2)
                     return 'B';
-                else if (averageGrade >= 70)
+                else if (averageGrade >= (Students.Count() / 5) * 3)
                     return 'C';
-                else if (averageGrade >= 60)
+                else if (averageGrade >= (Students.Count() / 5) * 4)
                     return 'D';
                 else
                     return 'F';
-            
-            
-        }
 
+            }
+           
+            
+             
+        }
+      
         /// <summary>
         ///     Converts json to the appropriate gradebook type.
         ///     Note: This method contains code that is not recommended practice.
