@@ -14,5 +14,6 @@ namespace GradeBook.GradeBooks
             Type = Enums.GradeBookType.Ranked;
 
         }
+
     }
 }

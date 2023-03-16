@@ -208,24 +208,53 @@ namespace GradeBook.GradeBooks
 
         public virtual char GetLetterGrade(double averageGrade)
         {
-            if (Students.Count <= 5) throw (new System.InvalidOperationException());
+            if (Students.Count() < 5) 
+            { 
+                throw (new System.InvalidOperationException()); 
+            }
             else
             {
-                if (averageGrade >= Students.Count() / 5)
+                double[] table = new double[Students.Count()];
+                int i = 0;
+                foreach (var student in Students)
+                {
+                    table[i] = student.AverageGrade;
+                    i++;
+                }
+                bool change;
+                do
+                {
+                    change = false;
+                    for (int k = 0; k < table.Length - 1; k++)
+                    {
+                        double ele1 = table[k];
+                        double ele2 = table[k + 1];
+                        if (ele2 < ele1)
+                        {
+                            table[k] = ele2;
+                            table[k + 1] = ele1;
+                            change = true;
+                        }
+                    }
+                } while (change);
+                int pozycja = -1;
+                for (int j = 0; j < Students.Count(); j++)
+                {
+                    if (table[j] == averageGrade) pozycja = j;
+                }
+                if (pozycja >= Students.Count() * 0.8)
                     return 'A';
-                else if (averageGrade >= (Students.Count() / 5) * 2)
+                else if (pozycja >= Students.Count() * 0.6)
                     return 'B';
-                else if (averageGrade >= (Students.Count() / 5) * 3)
+                else if (pozycja >= Students.Count() * 0.4)
                     return 'C';
-                else if (averageGrade >= (Students.Count() / 5) * 4)
+                else if (pozycja >= Students.Count() * 0.2)
                     return 'D';
                 else
                     return 'F';
 
             }
-           
-            
-             
+         
         }
       
         /// <summary>
